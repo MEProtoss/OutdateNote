@@ -560,3 +560,12 @@ Date:   Tue Aug 26 19:48:51 2008 +0800
 ```console
 $ git config --global alias.visual '!gitk'
 ```
+
+## Git使用流程总结
+
+1. 在github上创建仓库
+2. 克隆到本地tag
+3. 将本地文件添加add
+4. commit 
+5. tag
+6. push
