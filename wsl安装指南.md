@@ -92,26 +92,8 @@ sudo apt install clangd
 #然后去init.vim中
 :CocInstal clangd
 ```
-## python 配置
-### 自动补全
-```bash
-#首先安装相关依赖：
-python3 -m pip install pynvim
-python3 -m pip install jedi
-pip3 install neovim --upgrade 
+### 
 
-#随后把插件装上       
-Plug 'ncm2/ncm2'  
-Plug 'roxma/nvim-yarp'  
-Plug 'ncm2/ncm2-bufword'  
-Plug 'ncm2/ncm2-path'  
-Plug 'ncm2/ncm2-jedi'
-```
-### 一键编译运行,通过control+b快捷键组合来编译运行，control+w组合键关闭弹窗
-```bash
-nnoremap <C-B> :sp <CR> :term python % <CR>  
-nnoremap <C-W> :bd!<CR>
-```
 #强烈推荐这个小游戏Vim大冒险来学习vim！
 https://vim-adventures.com/
 
@@ -139,7 +121,7 @@ https://www.bilibili.com/video/BV1t54y1R7F3/?spm_id_from=333.999.0.0
 
 # vim插件管理
 
-#安装
+
 ```bash
 #安装
 call plug#begin('~/.vim/plugged')
@@ -168,7 +150,81 @@ call plug#end()
 :PlugClean
 ```
 
+## 一些装起来比较麻烦但是有用的插件
+
+### tagbar
+
+可以用来查看文件中的函数 
+
+安装方法
+
+```
+call plug#begin('~/.vim/plugged')
+Plug 'majutsushi/tagbar'
+call plug#end()
+```
+
+然后执行
+```
+source ~/.vimrc
+:PlugInstall
+```
+还需要安装Ctgas依赖
+
+```bash
+git clone https://github.com/universal-ctags/ctags.git
+cd ctags!
+./autogen.sh
+./configure --prefix=/where/you/want # defaults to /usr/local
+make
+make install # may require extra privileges depending on where to install
+```
+这样完就成了
+然后可以在vim配置文件中添加以下配置
+```
+map <silent> <F4> :TagbarToggle<CR> 
+let g:tagbar_width = 25
+autocmd BufReadPost *.cpp,*.c,*.h,*.cc,*.cxx call tagbar#autoopen() 
+```
+上述的配置可让打开常见的源代码文件的时会自动打开Tagbar插件。或者用vim打开文件时，按F4就能打开tagbar window
+
+
+
+###  neovim coc.vim
+
+代码补全插件 能做的有很多
+
+1. 安装neovim
+
+2. 安装vim-plug
+
+3. 自动补全需要安装的插件
+
+4. 1. 安装coc.nvim插件 (前提是安装了nodejs)
+   2. 我补全的是python, 在nvim中又运行了:CocInstall coc-pyright
+
+5. 在~/.config/nvim/init.vim 里面添加的配置
+
+```text
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+```
+
+这样打python代码就自动打出来了。
+
 # git配置（ubuntu 环境下的配置）
+
 ## 获取 Git 仓库
 通常有两种获取 Git 项目仓库的方式：
 1. 将尚未进行版本控制的本地目录转换为 Git 仓库；
@@ -241,6 +297,28 @@ git rm
 
 ### 查看提交历史
 在提交了若干更新，又或者克隆了某个项目之后，你也许想回顾下提交历史。 完成这个任务最简单而又有效的工具是``` git log``` 命令
+
+### 删除本地库
+
+首先去到  .git 目录
+
+然后
+
+ ``` rm -fr .git```
+
+标志 -f 用于在没有提示的情况下强行删除不存在的文件和参数（小心使用）
+
+标志 -r 用于递归删除每个目录及其内容。
+
+我们可以使用 git status 命令检查目录是否使用 git 初始化。
+
+如果文件夹没有用 git 初始化，它会抛出以下错误。
+
+```text
+fatal: not a git repository (or any of the parent directories): .git
+```
+
+然后，我们可以使用 ```git init ```命令重新初始化文件夹。
 
 ## 远程仓库的使用
 
@@ -566,6 +644,6 @@ $ git config --global alias.visual '!gitk'
 1. 在github上创建仓库
 2. 克隆到本地tag
 3. 将本地文件添加add
-4. commit 
+4. commit
 5. tag
 6. push
