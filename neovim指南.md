@@ -282,3 +282,28 @@ These are the customized shortcuts **I configured**, which I use often. Feel fre
 | `Lsp saga`| `<leader>tt`| Open a Floating Terminal |
 | `trouble`| `<leader>xd`| Open diagnostic for current file |
 | `trouble`| `q`| quit trouble diagnostic while in `NORMAL` mode|
+
+## 补充
+
+### 重命名
+
+方法1：
+```
+:saveas
+```
+方法2：
+:Explore在命令模式下:Explore （我将其实际映射到一个function键，这是非常方便的）。 例如，您可以用R重命名文件，或者用D删除它们。
+
+# 强烈推荐这个小游戏Vim大冒险来学习vim！
+
+https://vim-adventures.com/
+
+#大佬的文件看这里：
+https://github.com/MarsWang42/My-Vim-Conf
+
+#VimAwesome网站：
+https://vimawesome.com/
+
+#Vim Plug Github页面：
+https://github.com/junegunn/vim-plug
+
