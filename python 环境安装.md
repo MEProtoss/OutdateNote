@@ -3,6 +3,7 @@
 ## Anaconda
 
 ### **什么是Anaconda？**
+环境管理工具
 
 **1. 简介**
 
@@ -99,10 +100,89 @@ Python 3.9.13 (main, Aug 25 2022, 23:26:10)
 [GCC 11.2.0] :: Anaconda, Inc. on linux
 Type "help", "copyright", "credits" or "license" for more information.
 ```
+
+### 常用命令
+
+1. 创建名字为Name的流程环境，指定python版本为version，同时下载othersoftware软件：
+    conda create -n Name python=version othersoftware
+    如:
+    conda create -n sbhk python=3 sra-tools
+    创建名字为sbhk的流程环境，指定python版本为3，同时下载sra-tools 软件
+    注：建议指定python版本为为具体版本，如3.6，目前python=3似乎默认为3.9
+    新建的环境实际上可以在miniconda3/envs文件夹下看到。。
+2. 删除指定的流程环境，需指定流程环境的名字Name
+    conda remove -n Name --all
+3. 查看流程环境
+    conda env list
+4. 进入指定流程环境，需指定流程环境的名字Name
+    conda activate Name
+5. 退出当前流程环境
+    conda deactivate
+6. 重命名环境：先新建clone再进行删除
+    conda create -n sbhk --clone sboei
+    conda remove -n sbhk --all
+7. 想要为某个环境安装第三方包的话，进入该环境后输入：
+
+  ```text
+  conda install package_name
+  ```
 ## pytorch
 
+深度学习工具包 一个框架
+
+确定自己安装了显卡驱动
+```
+nvidia-smi
+```
+
+### cpu版
+
+```text
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+```
+
+### 验证
+
+```text
+import torch
+torch.cuda.is_available() # to check if your GPU driver and CUDA/ROCm is enabled and accessible by PyTorch
+x = torch.rand(5, 3)
+print(x)
+```
+应该出现
+tensor([[0.3380, 0.3845, 0.3217],
+        [0.8337, 0.9050, 0.2650],
+        [0.2979, 0.7141, 0.9069],
+        [0.1449, 0.1132, 0.1375],
+        [0.4675, 0.3947, 0.1426]])
+        
+
+### gpu版本
+conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 ## opencv
 ```bash
 pip install opencv-python-headless
 pip install opencv-contrib-python-headless
 ```
+
+## 可能遇到的问题
+
+### 画图时qt无法加载，提示以下错误
+Available platform plugins are：eglfs, minimal, minimalegl, offscreen, vnc, webgl, xcb.
+
+因为相关依赖没装好没有图形化界面
+
+解决方法
+sudo apt-get update
+sudo apt-get install build-essential
+sudo apt-get install qtcreator
+sudo apt-get install qt5-default
+sudo apt-get install libfontconfig1
+sudo apt-get install mesa-common-dev
+sudo apt-get upgrade
+
+### zsh的配置文件
+
+/.zshrc 不是 /.bashrc
+
+### libGL error: MESA-LOADER: failed to open swrast: /usr/lib/dri/swrast_dri.so: cannot open shared object file: No such file or directory (search paths /usr/lib/x86_64-linux-gnu/dri:\$${ORIGIN}/dri:/usr/lib/dri, suffix _dri) libGL error: failed to load driver: swrast

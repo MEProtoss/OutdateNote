@@ -93,8 +93,50 @@ sudo apt install clangd
 :CocInstal clangd
 ```
 
+# Linux中用户切换
 
+命令： su 指定要切换的用户，如：
+```
 
+su                        # 默认切换到 root 用户上
+
+su root                # 切换到 root 用户
+
+su  taita              i# 切换到 taitai 用户上
+```
+
+或无需密码切换回root用户
+```
+exit
+```
+
+默认安装好的linux系统是没有设置root用户密码的，下面介绍如何设置root用户的密码。
+由于Linux系统默认是没有激活 root 用户的，需要我们手动进行操作，步骤也非常简单，在命令行界面（终端）中输入如下命令： 
+```bash
+sudo passwd  #或者 
+
+sudo passwd root
+
+Password： #你当前用户的密码
+
+Enter new UNIX password：  #设置 root 用户的密码
+
+Retype new UNIX password：#重复以上 root 用户的密码
+
+```
+【新建用户】
+
+命令： sudo useradd 新建用户名，如：
+```
+sudo useraddtest
+
+sudo passwd 456
+```
+设置默认登录用户
+在powershell中输入（我是20.04版本，用户名owen）
+```bash
+ubuntu2004.exe config --default-user owen
+```
 #下面是大佬的脚本安的东西 大家自行取舍 
 https://github.com/MarsWang42/My-Vim-Conf/blob/master/.config/nvim/init.vim
 
