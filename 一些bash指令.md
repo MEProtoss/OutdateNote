@@ -6,3 +6,8 @@
 rm -rf filedir
 ```
 
+预览文件内容
+
+```
+cat filename
+```
