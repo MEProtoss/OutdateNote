@@ -96,22 +96,23 @@ sudo apt install clangd
 # Linux中用户切换
 
 命令： su 指定要切换的用户，如：
-```
+```bash
 
 su                        # 默认切换到 root 用户上
 
 su root                # 切换到 root 用户
 
-su  taita              i# 切换到 taitai 用户上
+su  taitai              # 切换到 taitai 用户上
 ```
 
 或无需密码切换回root用户
-```
+```bash
 exit
 ```
 
 默认安装好的linux系统是没有设置root用户密码的，下面介绍如何设置root用户的密码。
 由于Linux系统默认是没有激活 root 用户的，需要我们手动进行操作，步骤也非常简单，在命令行界面（终端）中输入如下命令： 
+
 ```bash
 sudo passwd  #或者 
 
