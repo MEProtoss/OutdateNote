@@ -1,36 +1,45 @@
 # wsl下安装ubuntu 以及配置
 
 1. Microsoft store中安装Ubuntu
-
 2. 开启Windows的wsl系统功能
-
 3. 升级wsl内核
    https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
 4. 启动创建账户
+
+
+## 准备工作
+
+查看当前环境安装的wsl
+wsl --list
+注销（卸载）当前安装的Linux的Windows子系统
+wsl --unregister Ubuntu
+
+## wsl2修改默认安装目录到其他盘 不要把它装到C盘！！！！
+
+wsl -l --all -v
+wsl --export Ubuntu-20.04 d:\wsl-ubuntu20.04.tar
+wsl --unregister Ubuntu-20.04
+wsl --import Ubuntu-20.04 d:\wsl-ubuntu20.04 d:\wsl-ubuntu20.04.tar --version 2
+ubuntu2004 config --default-user USERNAME
+del d:\wsl-ubuntu20.04.tar
 
 ## 常用软件及环境配置
 
 =**############以下内容建议全程手机热点###########**=
 
 ```bash
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt update
+
 #替换镜像
 https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/
 #更新系统
 sudo apt update
+
+sudo apt install curl git openssh-server net-tools
 #安装zsl
 sudo apt install -y zsh
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-#更改为默认bash
-cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-chsh -s /bin/zsh
-#更改主题
-sudo nano ~/.zshrc
-#将其中的ZSH_THEME修改为你想要的 github可以找到
-#启动zsh
-zsh
-#更新p配置
-source .zshrc
+sh -c "$(curl -fsSL https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh)"
 #使用大佬配置
 git clone https://github.com/MarsWang42/My-Vim-Conf.git
 #进入库
@@ -72,72 +81,9 @@ call plug#end()
 #退出再载入 然后Pluginstall 安装好 一次不行就多retry几次 务必安好 不然后面没法装clangd
 
 
-#对了 C和C++用户可以安装一下Clangd 配置一下一键调试脚本
-#安装npm
-sudo apt install npm
-#更新nodejs
-sudo npm install n -g
-sudo n stable
-#记得重启shell或重新加载source
-
-
-#依次运行
-sudo npm install -g yarn
-cd ~/.vim/plugged/coc.nvim	#创建这个路径
-yarn install
-yarn build #会报错 别管
-#安装clangd
-sudo apt install clangd
-
-#然后去init.vim中
-:CocInstal clangd
-```
-
-# Linux中用户切换
-
-命令： su 指定要切换的用户，如：
-```bash
-
-su                        # 默认切换到 root 用户上
-
-su root                # 切换到 root 用户
-
-su  taitai              # 切换到 taitai 用户上
-```
-
-或无需密码切换回root用户
-```bash
-exit
-```
-
-默认安装好的linux系统是没有设置root用户密码的，下面介绍如何设置root用户的密码。
-由于Linux系统默认是没有激活 root 用户的，需要我们手动进行操作，步骤也非常简单，在命令行界面（终端）中输入如下命令： 
-
-```bash
-sudo passwd  #或者 
-
-sudo passwd root
-
-Password： #你当前用户的密码
-
-Enter new UNIX password：  #设置 root 用户的密码
-
-Retype new UNIX password：#重复以上 root 用户的密码
 
 ```
-【新建用户】
 
-命令： sudo useradd 新建用户名，如：
-```
-sudo useraddtest
-
-sudo passwd 456
-```
-设置默认登录用户
-在powershell中输入（我是20.04版本，用户名owen）
-```bash
-ubuntu2004.exe config --default-user owen
-```
 #下面是大佬的脚本安的东西 大家自行取舍 
 https://github.com/MarsWang42/My-Vim-Conf/blob/master/.config/nvim/init.vim
 
@@ -148,3 +94,26 @@ https://www.bilibili.com/video/BV1kT411C7vm/?spm_id_from=333.999.0.0&vd_source=5
 
 https://www.bilibili.com/video/BV1t54y1R7F3/?spm_id_from=333.999.0.0
 
+
+
+# Linux 终端文件管理器 —— ranger
+
+```sudo apt-get install ranger```
+
+h: 返回上一级目录
+l: 前往下一级目录
+j: 当前目录向下选择
+k: 当前目录向上选择
+q: 退出
+gg: 移动到顶端
+G: 移动到底部
+
+S: 在当前目录下打开一个 shell
+Shift + S: 在终端中进入当前 ranger 中的路径
+?: 打开菜单界面
+/: 在当前目录下搜索文件
+:: 打开控制台
+cd: 打开带着内容 "cd " 的控制台
+Ctrl + f: 向下翻页
+Ctrl + b: 向上翻页
+f: 查找
